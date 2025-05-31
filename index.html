@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parola Productions</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Variables (Custom Properties) for Colors and Fonts */
+        :root {
+            --parola-white: #ffffff;
+            --parola-gold: #f0b64a;
+            --parola-blue: #002e6b;
+            --parola-brown: #513520;
+            --parola-light-blue: #e0f2fe; /* For subtle backgrounds */
+            --parola-light-gold: #fffbeb; /* For subtle accents */
+            --font-lora: 'Lora', serif;
+            --font-open-sans: 'Open Sans', sans-serif;
+            --text-gray-700: #4a5568; /* Example gray */
+            --text-gray-800: #2d3748; /* Example dark gray */
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            --nav-height: 5rem; /* 80px */
+        }
+
+        /* Global Resets and Base Styles */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px; /* Base font size */
+        }
+
+        body {
+            font-family: var(--font-open-sans);
+            color: var(--text-gray-800);
+            background-color: var(--parola-light-blue);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        /* Typography */
+        .section-title {
+            font-family: var(--font-lora);
+            font-size: 2.25rem; /* 36px */
+            font-weight: bold;
+            color: var(--parola-blue);
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            font-family: var(--font-lora);
+            font-size: 1.25rem; /* 20px */
+            color: var(--parola-gold);
+            margin-bottom: 2.5rem;
+            text-align: center;
+        }
+
+        .content-text {
+            font-size: 1rem; /* 16px */
+            color: var(--text-gray-700);
+            line-height: 1.75;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-lora);
+            color: var(--parola-blue);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease-in-out;
+            box-shadow: var(--shadow-md, 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06));
+            cursor: pointer;
+        }
+        .btn:hover {
+            box-shadow: var(--shadow-lg);
+            transform: scale(1.05);
+        }
+        .btn-gold {
+            background-color: var(--parola-gold);
+            color: var(--parola-blue);
+        }
+        .btn-gold:hover {
+            background-color: #e0a83a; /* Darker gold */
+        }
+        .btn-blue {
+            background-color: var(--parola-blue);
+            color: var(--parola-white);
+        }
+        .btn-blue:hover {
+            background-color: #002252; /* Darker blue */
+        }
+
+        /* Navigation */
+        .navbar {
+            background-color: rgba(0, 46, 107, 0.9); /* parola-blue with opacity */
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            height: var(--nav-height);
+            box-shadow: var(--shadow-lg);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            backdrop-filter: blur(5px); /* For frosted glass effect */
+        }
+        .navbar.scrolled {
+            background-color: rgba(0, 46, 107, 0.95);
+            box-shadow: var(--shadow-xl);
+        }
+        .navbar-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+        }
+        .nav-logo {
+            font-family: var(--font-lora);
+            font-size: 1.5rem; /* 24px */
+            font-weight: bold;
+            color: var(--parola-gold);
+            text-decoration: none;
+        }
+        .nav-links {
+            display: none; /* Hidden on mobile */
+        }
+        .nav-link {
+            color: var(--parola-white);
+            text-decoration: none;
+            padding: 0.5rem 0.75rem;
+            margin-left: 0.25rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: var(--parola-gold);
+        }
+        .nav-link.btn { /* For the "Watch Film" button in nav */
+            margin-left: 0.5rem;
+            color: var(--parola-blue) !important; /* Override .nav-link color */
+        }
+
+        .mobile-menu-button {
+            display: block; /* Visible on mobile */
+            background: none;
+            border: none;
+            color: var(--parola-gold);
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+        .mobile-menu-button svg {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+        .mobile-menu {
+            display: none; /* Hidden by default */
+            background-color: rgba(0, 46, 107, 0.95); /* parola-blue with opacity */
+            position: absolute;
+            top: var(--nav-height);
+            left: 0;
+            right: 0;
+            padding: 1rem 0;
+            box-shadow: var(--shadow-lg);
+        }
+        .mobile-menu.open {
+            display: block;
+        }
+        .mobile-menu .nav-link {
+            display: block;
+            text-align: center;
+            padding: 0.75rem 1rem;
+        }
+        .mobile-menu .nav-link.btn {
+            margin: 0.5rem auto;
+            display: table; /* To center block button */
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            background-color: var(--parola-blue);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: var(--nav-height); /* Account for fixed nav */
+            color: var(--parola-white);
+        }
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0, 46, 107, 0.5), rgba(0, 46, 107, 0.9));
+            z-index: 0;
+        }
+        .lighthouse-beam-effect {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 80%;
+            max-width: 600px;
+            height: 100%;
+            background: radial-gradient(ellipse at top, rgba(240, 182, 74, 0.25) 0%, rgba(240, 182, 74, 0) 70%);
+            transform-origin: top center;
+            animation: beamSweep 10s linear infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            padding: 1.5rem;
+        }
+        .hero-logo-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 2rem auto;
+            box-shadow: var(--shadow-xl);
+            animation: subtlePulse 2s infinite ease-in-out;
+        }
+        .hero-title {
+            font-family: var(--font-lora);
+            font-size: 3rem; /* 48px */
+            font-weight: bold;
+            color: var(--parola-white);
+            margin-bottom: 1.5rem;
+        }
+        .hero-tagline {
+            font-family: var(--font-lora);
+            font-size: 1.25rem; /* 20px */
+            color: var(--parola-gold);
+            font-style: italic;
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* General Section Styling */
+        .section {
+            padding-top: 5rem; /* 80px */
+            padding-bottom: 5rem; /* 80px */
+        }
+        .bg-white { background-color: var(--parola-white); }
+        .bg-light-gold { background-color: var(--parola-light-gold); }
+        .bg-blue { background-color: var(--parola-blue); color: var(--parola-white); }
+        .bg-blue .section-title { color: var(--parola-white); }
+        .bg-blue .section-subtitle { color: var(--parola-gold); }
+        .bg-blue .content-text { color: rgba(255,255,255,0.9); }
+
+
+        /* About Section */
+        .about-grid {
+            display: grid;
+            gap: 3rem;
+            align-items: center;
+        }
+        .about-grid img {
+            width: 100%;
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow-xl);
+        }
+        .about-text-container h3 {
+            font-size: 1.875rem; /* 30px */
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+        .about-text-container div + div { /* Space between mission and vision */
+            margin-top: 2.5rem;
+        }
+
+        /* Members Section */
+        .members-grid {
+            display: grid;
+            gap: 2rem;
+        }
+        .member-card {
+            background-color: var(--parola-white);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: var(--shadow-lg);
+            text-align: center;
+            transition: all 0.3s ease-in-out;
+        }
+        .member-card:hover {
+            box-shadow: var(--shadow-2xl);
+            transform: translateY(-5px);
+        }
+        .member-image {
+            width: 8rem; /* 128px */
+            height: 8rem; /* 128px */
+            border-radius: 50%;
+            margin: 0 auto 1rem auto;
+            box-shadow: var(--shadow-md, 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06));
+            border: 4px solid var(--parola-gold);
+            object-fit: cover;
+        }
+        .member-name {
+            font-family: var(--font-lora);
+            font-size: 1.25rem; /* 20px */
+            font-weight: 600;
+            color: var(--parola-blue);
+            margin-bottom: 0.25rem;
+        }
+        .member-role {
+            color: var(--parola-brown);
+        }
+
+        /* BTS Section */
+        .bts-grid {
+            display: grid;
+            gap: 3rem;
+            align-items: center;
+        }
+        .bts-grid img {
+            width: 100%;
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow-xl);
+        }
+        .bts-text-container .content-text + .content-text {
+            margin-top: 1.5rem;
+        }
+        .bts-text-container .btn {
+            margin-top: 1rem;
+        }
+
+        /* Showcase Section */
+        .showcase-grid {
+            display: grid;
+            gap: 2rem; /* Mobile gap */
+            align-items: center;
+        }
+        .showcase-poster img {
+            width: 100%;
+            max-width: 384px; /* Roughly sm in Tailwind */
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow-2xl);
+        }
+        .showcase-info h3 {
+            font-size: 2.25rem; /* 36px */
+            font-weight: bold;
+            color: var(--parola-gold);
+            margin-bottom: 1.5rem;
+        }
+        .showcase-info p {
+            font-size: 1.125rem; /* 18px */
+            line-height: 1.75;
+            margin-bottom: 1rem;
+        }
+        .showcase-info p.italic {
+            font-style: italic;
+            color: rgba(255,255,255,0.8);
+        }
+
+        /* Gallery Section */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* Mobile: 2 columns */
+            gap: 1rem; /* 16px */
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow-md, 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06));
+            transition: box-shadow 0.3s ease;
+            aspect-ratio: 1 / 1; /* Square images by default */
+        }
+        .gallery-item img:hover {
+            box-shadow: var(--shadow-xl);
+        }
+
+        /* Watch Section */
+        .video-container {
+            max-width: 896px; /* max-w-4xl */
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .video-wrapper { /* For 16:9 aspect ratio */
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+            height: 0;
+            overflow: hidden;
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow-2xl);
+        }
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .watch-caption {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--parola-brown);
+            color: rgba(255,255,255,0.8);
+            padding: 3rem 0;
+            text-align: center;
+        }
+        .footer-logo {
+            font-family: var(--font-lora);
+            font-size: 1.5rem; /* 24px */
+            font-weight: bold;
+            color: var(--parola-gold);
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+        .footer p {
+            margin-bottom: 0.5rem;
+        }
+        .footer .text-sm { font-size: 0.875rem; /* 14px */ }
+        .footer .text-xs {
+            font-size: 0.75rem; /* 12px */
+            margin-top: 1rem;
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* Animations */
+        .animated-element {
+            opacity: 0;
+            /* animation will be applied by JS */
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .fade-in-up { /* Class to apply animation */
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        @keyframes subtlePulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.03); opacity: 0.9; }
+        }
+        @keyframes beamSweep {
+            0% { transform: translateX(-50%) rotate(-30deg) scaleY(1.5); opacity: 0.5; }
+            50% { transform: translateX(-50%) rotate(30deg) scaleY(1.5); opacity: 0.7; }
+            100% { transform: translateX(-50%) rotate(-30deg) scaleY(1.5); opacity: 0.5; }
+        }
+
+        /* Responsive Adjustments (Media Queries) */
+        /* Tablet and small desktops */
+        @media (min-width: 768px) {
+            .section-title { font-size: 2.75rem; /* 44px */ }
+            .section-subtitle { font-size: 1.5rem; /* 24px */ margin-bottom: 3rem; }
+            .content-text { font-size: 1.125rem; /* 18px */ }
+
+            .nav-links { display: flex; align-items: center; }
+            .mobile-menu-button { display: none; }
+            .mobile-menu { display: none !important; } /* Ensure it's hidden */
+
+            .hero-title { font-size: 4rem; /* 64px */ }
+            .hero-tagline { font-size: 1.5rem; /* 24px */ }
+
+            .about-grid { grid-template-columns: 1fr 1fr; }
+            .members-grid { grid-template-columns: repeat(2, 1fr); }
+            .bts-grid { grid-template-columns: 1fr 1fr; }
+            .bts-grid > div:first-child { order: 0; } /* Text first */
+            .bts-grid > div:last-child { order: 1; } /* Image second */
+            /* For alternating layout:
+            .bts-grid:nth-child(even) > div:first-child { order: 1; }
+            .bts-grid:nth-child(even) > div:last-child { order: 0; } */
+
+            .showcase-grid { grid-template-columns: 2fr 3fr; gap: 3rem; }
+            .showcase-info h3 { font-size: 3rem; /* 48px */ }
+
+            .gallery-grid { grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+            .gallery-item img { aspect-ratio: auto; /* Allow natural aspect ratio or set specific like 4/3 */ }
+        }
+
+        /* Larger desktops */
+        @media (min-width: 1024px) {
+            .section-title { font-size: 3rem; /* 48px */ }
+            .hero-title { font-size: 4.5rem; /* 72px */ }
+            .members-grid { grid-template-columns: repeat(4, 1fr); }
+            .gallery-grid { grid-template-columns: repeat(4, 1fr); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="navbar">
+        <div class="container navbar-container">
+            <a href="#home" class="nav-logo">Parola Productions</a>
+            <div class="nav-links">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#members" class="nav-link">Members</a>
+                <a href="#bts" class="nav-link">BTS</a>
+                <a href="#showcase" class="nav-link">Showcase</a>
+                <a href="#gallery" class="nav-link">Gallery</a>
+                <a href="#watch" class="nav-link btn btn-gold">Watch Film</a>
+            </div>
+            <button id="mobile-menu-button" class="mobile-menu-button" aria-expanded="false" aria-label="Open main menu">
+                <svg id="menu-icon-open" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display: block;">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+                <svg id="menu-icon-close" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display: none;">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        <div id="mobile-menu" class="mobile-menu">
+            <a href="#home" class="nav-link">Home</a>
+            <a href="#about" class="nav-link">About</a>
+            <a href="#members" class="nav-link">Members</a>
+            <a href="#bts" class="nav-link">BTS</a>
+            <a href="#showcase" class="nav-link">Showcase</a>
+            <a href="#gallery" class="nav-link">Gallery</a>
+            <a href="#watch" class="nav-link btn btn-gold">Watch Film</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="home" class="hero">
+        <div class="hero-overlay"></div>
+        <div class="lighthouse-beam-effect"></div>
+        <div class="hero-content animated-element">
+            <img src="https://placehold.co/150x150/f0b64a/002e6b?text=Parola&font=lora" alt="Parola Productions Logo" class="hero-logo-img">
+            <h1 class="hero-title">Parola Productions</h1>
+            <p class="hero-tagline">Shining a Light on Untold Stories.</p>
+            <a href="#showcase" class="btn btn-gold">Explore Our Work</a>
+        </div>
+    </header>
+
+    <!-- About Section (Mission/Vision) -->
+    <section id="about" class="section bg-white">
+        <div class="container">
+            <div class="animated-element">
+                <h2 class="section-title">Our Guiding Light</h2>
+                <p class="section-subtitle">Mission & Vision</p>
+            </div>
+            <div class="about-grid">
+                <div class="animated-element">
+                    <img src="https://placehold.co/600x400/002e6b/ffffff?text=Our+Team+Brainstorming" alt="Team working">
+                </div>
+                <div class="about-text-container">
+                    <div class="animated-element">
+                        <h3>Our Mission</h3>
+                        <p class="content-text">
+                            <!-- REPLACE: Your Mission Statement Here -->
+                            To craft compelling visual narratives that resonate, inspire, and illuminate diverse perspectives. We are committed to fostering creativity and collaboration in every project, bringing unique stories to life with passion and technical excellence.
+                        </p>
+                    </div>
+                    <div class="animated-element" style="animation-delay: 0.1s;">
+                        <h3>Our Vision</h3>
+                        <p class="content-text">
+                            <!-- REPLACE: Your Vision Statement Here -->
+                            To be a beacon in student filmmaking, recognized for our innovative storytelling and impactful productions. We aspire to create films that not only entertain but also spark dialogue and contribute positively to our community and beyond.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Members Section -->
+    <section id="members" class="section bg-light-gold">
+        <div class="container">
+            <div class="animated-element">
+                <h2 class="section-title">The Crew</h2>
+                <p class="section-subtitle">Meet the Talents Behind Parola</p>
+            </div>
+            <div class="members-grid">
+                <!-- REPLACE: Member Cards - Add one for each member -->
+                <div class="member-card animated-element">
+                    <img src="https://placehold.co/200x200/513520/ffffff?text=Member1" alt="Member Name 1" class="member-image">
+                    <h3 class="member-name">Ella Romero</h3>
+                    <p class="member-role">Director</p>
+                </div>
+                <div class="member-card animated-element" style="animation-delay: 0.1s;">
+                    <img src="https://placehold.co/200x200/513520/ffffff?text=Member2" alt="Member Name 2" class="member-image">
+                    <h3 class="member-name">Janine Dumalag</h3>
+                    <p class="member-role">Co-Director</p>
+                </div>
+                <div class="member-card animated-element" style="animation-delay: 0.2s;">
+                    <img src="https://placehold.co/200x200/513520/ffffff?text=Member3" alt="Member Name 3" class="member-image">
+                    <h3 class="member-name">Darel Garcia</h3>
+                    <p class="member-role">Director of Photography</p>
+                </div>
+                <div class="member-card animated-element" style="animation-delay: 0.3s;">
+                    <img src="https://placehold.co/200x200/513520/ffffff?text=Member4" alt="Member Name 4" class="member-image">
+                    <h3 class="member-name">Caleb Pagulayan/h3>
+                    <p class="member-role">Editor, Camera Op.</p>
+                </div>
+                            <div class="members-grid">
+                <!-- REPLACE: Member Cards - Add one for each member -->
+                <div class="member-card animated-element">
+                    <img src="https://placehold.co/200x200/513520/ffffff?text=Member1" alt="Member Name 1" class="member-image">
+                    <h3 class="member-name">Member Name 1</h3>
+                    <p class="member-role">Director</p>
+                </div>
+                <div class="member-card animated-element" style="animation-delay: 0.1s;">
+                    <img src="https://placehold.co/200x200/513520/ffffff?text=Member2" alt="Member Name 2" class="member-image">
+                    <h3 class="member-name">Member Name 2</h3>
+                    <p class="member-role">Writer</p>
+                </div>
+                <div class="member-card animated-element" style="animation-delay: 0.2s;">
+                    <img src="https://placehold.co/200x200/513520/ffffff?text=Member3" alt="Member Name 3" class="member-image">
+                    <h3 class="member-name">Member Name 3</h3>
+                    <p class="member-role">Cinematographer</p>
+                </div>
+                <div class="member-card animated-element" style="animation-delay: 0.3s;">
+                    <img src="https://placehold.co/200x200/513520/ffffff?text=Member4" alt="Member Name 4" class="member-image">
+                    <h3 class="member-name">Member Name 4</h3>
+                    <p class="member-role">Editor</p>
+                </div>
+                            <div class="members-grid">
+                <!-- REPLACE: Member Cards - Add one for each member -->
+                <div class="member-card animated-element">
+                    <img src="https://placehold.co/200x200/513520/ffffff?text=Member1" alt="Member Name 1" class="member-image">
+                    <h3 class="member-name">Member Name 1</h3>
+                    <p class="member-role">Director</p>
+                </div>
+                <div class="member-card animated-element" style="animation-delay: 0.1s;">
+                    <img src="https://placehold.co/200x200/513520/ffffff?text=Member2" alt="Member Name 2" class="member-image">
+                    <h3 class="member-name">Member Name 2</h3>
+                    <p class="member-role">Writer</p>
+                </div>
+                <div class="member-card animated-element" style="animation-delay: 0.2s;">
+                    <img src="https://placehold.co/200x200/513520/ffffff?text=Member3" alt="Member Name 3" class="member-image">
+                    <h3 class="member-name">Member Name 3</h3>
+                    <p class="member-role">Cinematographer</p>
+                </div>
+                <div class="member-card animated-element" style="animation-delay: 0.3s;">
+                    <img src="https://placehold.co/200x200/513520/ffffff?text=Member4" alt="Member Name 4" class="member-image">
+                    <h3 class="member-name">Member Name 4</h3>
+                    <p class="member-role">Editor</p>
+                </div>
+                <!-- Add more member cards as needed -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Behind the Scenes Section -->
+    <section id="bts" class="section bg-white">
+        <div class="container">
+            <div class="animated-element">
+                <h2 class="section-title">Behind the Magic</h2>
+                <p class="section-subtitle">A Glimpse into Our Creative Process</p>
+            </div>
+            <div class="bts-grid">
+                <div class="bts-text-container animated-element">
+                    <p class="content-text">
+                        <!-- REPLACE: BTS Description -->
+                        At Parola Productions, the journey of filmmaking is as important as the final product. We believe in a collaborative and hands-on approach, where every member's input is valued.
+                    </p>
+                    <p class="content-text">
+                        Our behind-the-scenes moments capture the challenges, the laughter, the learning, and the sheer joy of bringing a story to life. It's where ideas spark, problems are solved, and friendships are forged.
+                    </p>
+                    <a href="#gallery" class="btn btn-blue">View BTS Gallery</a>
+                </div>
+                <div class="animated-element" style="animation-delay: 0.1s;">
+                    <img src="https://placehold.co/600x400/f0b64a/002e6b?text=BTS+Snapshot" alt="Behind the scenes">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Showcase: The Tarantanods Section -->
+    <section id="showcase" class="section bg-blue">
+        <div class="container">
+            <div class="animated-element">
+                <h2 class="section-title">Film Showcase</h2>
+                <p class="section-subtitle">Our Debut Film</p>
+            </div>
+            <div class="showcase-grid">
+                <div class="showcase-poster animated-element">
+                    <!-- REPLACE: Film Poster Image -->
+                    <img src="https://placehold.co/400x600/f0b64a/002e6b?text=The+Tarantanods+Poster" alt="The Tarantanods Film Poster">
+                </div>
+                <div class="showcase-info animated-element" style="animation-delay: 0.1s;">
+                    <h3>The Tarantanods</h3>
+                    <p>
+                        <!-- REPLACE: Film Synopsis -->
+                        "The Tarantanods" is a [Your Film's Genre] that explores [Your Film's Theme/Logline]. Follow the journey of [Main Characters/Brief Plot Summary].
+                    </p>
+                    <p class="italic">
+                        <!-- REPLACE: Optional - Director's note or key highlight -->
+                        This film was a labor of love, created by passionate students eager to tell a unique story.
+                    </p>
+                    <a href="#watch" class="btn btn-gold">Watch The Film</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="section bg-light-gold">
+        <div class="container">
+            <div class="animated-element">
+                <h2 class="section-title">Moments Captured</h2>
+                <p class="section-subtitle">Behind the Scenes & Production Stills</p>
+            </div>
+            <div class="gallery-grid">
+                <!-- REPLACE: Gallery Images - Add more images -->
+                <div class="gallery-item animated-element"><img src="https://placehold.co/400x300/002e6b/ffffff?text=BTS+1" alt="Gallery Image 1"></div>
+                <div class="gallery-item animated-element" style="animation-delay: 0.05s;"><img src="https://placehold.co/400x300/513520/ffffff?text=BTS+2" alt="Gallery Image 2"></div>
+                <div class="gallery-item animated-element" style="animation-delay: 0.1s;"><img src="https://placehold.co/400x300/f0b64a/000000?text=BTS+3" alt="Gallery Image 3"></div>
+                <div class="gallery-item animated-element" style="animation-delay: 0.15s;"><img src="https://placehold.co/400x300/002e6b/f0b64a?text=BTS+4" alt="Gallery Image 4"></div>
+                <div class="gallery-item animated-element" style="animation-delay: 0.2s;"><img src="https://placehold.co/400x300/513520/f0b64a?text=BTS+5" alt="Gallery Image 5"></div>
+                <div class="gallery-item animated-element" style="animation-delay: 0.25s;"><img src="https://placehold.co/400x300/f0b64a/ffffff?text=BTS+6" alt="Gallery Image 6"></div>
+                <div class="gallery-item animated-element" style="animation-delay: 0.3s;"><img src="https://placehold.co/400x300/002e6b/ffffff?text=BTS+7" alt="Gallery Image 7"></div>
+                <div class="gallery-item animated-element" style="animation-delay: 0.35s;"><img src="https://placehold.co/400x300/513520/ffffff?text=BTS+8" alt="Gallery Image 8"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Watch Section -->
+    <section id="watch" class="section bg-white">
+        <div class="container">
+            <div class="animated-element">
+                <h2 class="section-title">Watch "The Tarantanods"</h2>
+                <p class="section-subtitle">Experience Our Debut Film</p>
+            </div>
+            <div class="video-container animated-element">
+                <div class="video-wrapper">
+                    <!-- REPLACE: YouTube Embed Link -->
+                    <iframe
+                        src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                        title="YouTube video player"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <p class="content-text watch-caption">
+                    <!-- REPLACE: Optional text below video -->
+                    We hope you enjoy "The Tarantanods"! Feel free to share your thoughts and follow us for more updates.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <a href="#home" class="footer-logo">Parola Productions</a>
+            <p>
+                <!-- REPLACE: Your School/Project Info -->
+                A School Project for [Your School Name/Course Name]
+            </p>
+            <p class="text-sm">
+                &copy; <span id="currentYear"></span> Parola Productions. All Rights Reserved.
+            </p>
+            <p class="text-xs">
+                Website designed with assistance from T3 Chat.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const navbar = document.getElementById('navbar');
+            const navHeight = navbar.offsetHeight; // Get actual height
+
+            // Mobile menu toggle
+            const menuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIconOpen = document.getElementById('menu-icon-open');
+            const menuIconClose = document.getElementById('menu-icon-close');
+
+            menuButton.addEventListener('click', () => {
+                const isExpanded = menuButton.getAttribute('aria-expanded') === 'true' || false;
+                menuButton.setAttribute('aria-expanded', !isExpanded);
+                mobileMenu.classList.toggle('open');
+                menuIconOpen.style.display = isExpanded ? 'block' : 'none';
+                menuIconClose.style.display = isExpanded ? 'none' : 'block';
+            });
+
+            // Close mobile menu when a link is clicked
+            const mobileNavLinks = mobileMenu.querySelectorAll('a.nav-link');
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    menuButton.setAttribute('aria-expanded', 'false');
+                    mobileMenu.classList.remove('open');
+                    menuIconOpen.style.display = 'block';
+                    menuIconClose.style.display = 'none';
+                });
+            });
+
+            // Smooth scroll for internal links (adjusting for fixed navbar)
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    const targetId = this.getAttribute('href');
+                    if (targetId === "#") return; // Avoid issues with empty hrefs
+                    const targetElement = document.querySelector(targetId);
+
+                    if (targetElement) {
+                        e.preventDefault();
+                        const elementPosition = targetElement.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - navHeight;
+
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: "smooth"
+                        });
+                    }
+                });
+            });
+
+            // Navbar style change on scroll
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            // Intersection Observer for animations
+            const animatedElements = document.querySelectorAll('.animated-element');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in-up');
+                        // Optional: unobserve after animation to prevent re-triggering
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 }); // Trigger when 10% of the element is visible
+
+            animatedElements.forEach(el => {
+                observer.observe(el);
+            });
+
+            // Set current year in footer
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+        });
+    </script>
+
+</body>
+</html>
