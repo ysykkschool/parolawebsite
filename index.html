@@ -317,9 +317,10 @@
         .member-image {
             width: 8rem; /* 128px */
             height: 8rem; /* 128px */
-            border-radius: 50%;
+            border-radius: 0; /* Removed border-radius for square shape */
             margin: 0 auto 1rem auto;
             box-shadow: var(--shadow-md, 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06));
+            border: 4px solid var(--parola-gold);
             object-fit: cover;
         }
         .member-name {
@@ -332,7 +333,6 @@
         .member-role {
             color: var(--parola-brown);
         }
-
 
         /* BTS Section */
         .bts-grid {
