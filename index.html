@@ -385,7 +385,7 @@
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr); /* Mobile: 2 columns */
-            gap: 1rem; /* 16px */
+            gap: 1.5rem; /* Increased gap to 24px */
         }
         .gallery-item img {
             width: 100%;
@@ -394,10 +394,12 @@
             border-radius: 0.5rem;
             box-shadow: var(--shadow-md, 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06));
             transition: box-shadow 0.3s ease;
-            aspect-ratio: 1 / 1; /* Square images by default */
+            aspect-ratio: 4 / 3; /* Changed to 4:3 aspect ratio for larger viewing */
+            max-height: 400px; /* Added max height */
         }
         .gallery-item img:hover {
             box-shadow: var(--shadow-xl);
+            transform: scale(1.02); /* Subtle zoom on hover */
         }
 
         /* Watch Section */
